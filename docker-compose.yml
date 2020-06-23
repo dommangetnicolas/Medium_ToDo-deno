@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  conduiteaccompagne_db_development:
+    container_name: todoapp-database
+    image: mongo
+    ports:
+      - "27017:27017"
