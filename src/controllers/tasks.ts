@@ -52,12 +52,50 @@ export const createTask = async ({
 };
 
 /**
+ * Update a task
+ * @param param0
+ */
+export const updateTask = async ({
+  request,
+  response,
+  params,
+}: {
+  request: any;
+  params: { id?: String };
+  response: any;
+}) => {
+  const { id } = params;
+
+  if (!id || !checkOid(id.toString()) || !request.hasBody) {
+    response.status = 400;
+    response.body = { error: "Invalid data" };
+    return;
+  }
+
+  const task = await Task.findOne({ _id: { $oid: id } });
+
+  if (!task) {
+    response.body = 404;
+    response.body = { error: "Task not found" };
+    return;
+  }
+
+  const {
+    value: { title, done },
+  } = await request.body();
+
+  await Task.updateOne({ _id: { $oid: id } }, { $set: { title, done } });
+
+  response.status = 201;
+};
+
+/**
  * Delete a task
  * @param param0
  */
 export const deleteTask = async ({
-  params,
   response,
+  params,
 }: {
   params: { id?: String };
   response: any;
