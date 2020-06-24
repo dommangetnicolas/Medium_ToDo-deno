@@ -3,7 +3,7 @@
 
   "scripts": {
     "start": {
-      "cmd": "deno run --allow-net src/index.ts",
+      "cmd": "deno run --allow-net --allow-write --allow-read --allow-plugin --unstable src/index.ts",
       "desc": "Run the API"
     },
     "dev": {
